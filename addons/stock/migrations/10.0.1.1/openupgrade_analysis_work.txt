@@ -78,8 +78,6 @@ stock        / stock.scrap              / scrap_location_id (many2one)  : NEW re
 stock        / stock.scrap              / scrap_qty (float)             : NEW required: required, req_default: function
 stock        / stock.scrap              / state (selection)             : NEW selection_keys: ['done', 'draft']
 # TODO: Create one record for each move that had as destionation a scrap
-# TODO ANDRES - Maybe need to create a workflow for the "state"
-# TODO ANDRES - Y que pasa con la secuencia NEW ir.sequence: stock.sequence_stock_scrap
 # location
 
 stock        / stock.warehouse          / active (boolean)              : NEW
