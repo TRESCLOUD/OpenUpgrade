@@ -19,7 +19,7 @@ def update_picking_type_id(env):
     procurement_rules_to_set = env['procurement.rule'].search([])
     
     for procurement_rule in procurement_rules_to_set:
-        if not procurement_rule.picking_type_id: #TODO ANDRES ponerle en el search por eficiencia
+        if not procurement_rule.picking_type_id:
             
             picking_type_id = False
             env.cr.execute(
@@ -82,9 +82,7 @@ def populate_stock_scrap(env):
     Fills up new object "stock.scrap" based on moves with destination scrap  
     :param env: enviroment variable (self)
     '''
-    #cr = env.cr
-    #scrap_locations = env['stock.location'].search([('scrap_location','=',True)])
-    
+        
     env.cr.execute(
         """
         SELECT id from stock_location 
@@ -93,7 +91,8 @@ def populate_stock_scrap(env):
         )
     scrap_location_ids = env.cr.fetchone()
     
-    #do not call stock_scrap.create as it will create a duplicated stock move, use SQL instead    
+    #do not call stock_scrap.create as it will create a duplicated stock move, use SQL instead
+    #field package_id not set as no value is defined    
     env.cr.execute(
         '''
         INSERT INTO stock_scrap (date_expected,location_id,lot_id,move_id,name,origin,owner_id,picking_id,product_id,product_uom_id,scrap_location_id,scrap_qty,state)
@@ -102,12 +101,4 @@ def populate_stock_scrap(env):
             WHERE location_id IN %s AND product_uom_qty < 0.0 AND state = 'done' 
                 OR location_dest_id IN %s AND product_uom_qty >= 0.0 AND state = 'done'
         ''',(scrap_location_ids,scrap_location_ids))
-    #field package_id not set as no value is defined
-
-
- 
- 
-
-
-    
     
