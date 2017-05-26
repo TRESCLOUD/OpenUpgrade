@@ -22,5 +22,3 @@ def migrate(env, version):
         """
         UPDATE stock_location_path SET auto = 'manual' WHERE auto = 'auto';
         """)
-    
-    
