@@ -18,11 +18,11 @@ def update_picking_type_id(env):
     :param env: environment variable (self)
     """
     # load xml data to be used for filling in missing info
-    xml_stock_picking_type_int = env.ref("stock.picking_type_internal")
-    xml_stock_picking_type_out = env.ref("stock.picking_type_out")
-    xml_stock_picking_type_in = env.ref("stock.picking_type_in")
+    xml_stock_picking_type_int = env.ref("stock.picking_type_internal", False)
+    xml_stock_picking_type_out = env.ref("stock.picking_type_out", False)
+    xml_stock_picking_type_in = env.ref("stock.picking_type_in", False)
     xml_stock_picking_type_manufacturing = env.ref(
-        "mrp.picking_type_manufacturing"
+        "mrp.picking_type_manufacturing", False
     )
     # verify for each procurement rule to set
     procurement_rules_to_set = env['procurement.rule'].search([])
