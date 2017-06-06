@@ -14,4 +14,5 @@ United States - Chart of accounts.
         'views/res_config_view.xml',
         'data/res_company_data.xml',
     ],
+    'installable': False,
 }
