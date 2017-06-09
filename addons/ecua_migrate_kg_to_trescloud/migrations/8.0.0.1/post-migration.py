@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014 HBEE (http://www.hbee.eu)
-#    @author: Paulius Sladkevičius <paulius@hbee.eu>
+#    Copyright (C) 2017 Trescloud Cia. Ltda.  (www.trescloud.com).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
