@@ -324,11 +324,11 @@ actual arch.
                             "OpenUpgrade server).", view.xml_id, view.model)
         return True
 
-    @api.constrains('type', 'groups_id')
-    def _check_groups(self):
-        for view in self:
-            if view.type == 'qweb' and view.groups_id:
-                raise ValidationError(_("Qweb view cannot have 'Groups' define on the record. Use 'groups' attributes inside the view definition"))
+   # @api.constrains('type', 'groups_id')
+   # def _check_groups(self):
+   #     for view in self:
+   #         if view.type == 'qweb' and view.groups_id:
+   #s             raise ValidationError(_("Qweb view cannot have 'Groups' define on the record. Use 'groups' attributes inside the view definition"))
 
     @api.constrains('inherit_id')
     def _check_000_inheritance(self):

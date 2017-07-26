@@ -148,7 +148,7 @@ def assign_security_groups(env):
 def migrate(env, version):
     cr = env.cr
     map_location_auto(cr)
-    update_picking_type_id(env)
+    #update_picking_type_id(env)
     update_ordered_qty(cr)
     populate_stock_scrap(cr)
     assign_security_groups(env)

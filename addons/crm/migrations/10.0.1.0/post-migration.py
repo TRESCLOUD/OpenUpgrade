@@ -42,5 +42,5 @@ def _assign_stage_team(env):
 
 @openupgrade.migrate()
 def migrate(env, version):
-    _convert_next_activities(env)
+ #   _convert_next_activities(env)
     _assign_stage_team(env)
