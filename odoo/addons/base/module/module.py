@@ -581,6 +581,9 @@ class Module(models.Model):
 
     @api.model
     def create(self, vals):
+        #Migracion-FI
+        self.env.cr.execute("delete from ir_model_data where name= 'module_contacts' and  module='base'" )
+        #Migracion-FI
         new = super(Module, self).create(vals)
         module_metadata = {
             'name': 'module_%s' % vals['name'],

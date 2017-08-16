@@ -605,6 +605,7 @@ class GroupsImplied(models.Model):
 
     @api.model
     def create(self, values):
+        #Migracion-FI-script para elimina datos duplicados
         self.env.cr.execute("delete from res_groups where category_id=2 and name='Editor and Designer'" )
         self.env.cr.execute("delete from res_groups where category_id=73 and name='User'")
         self.env.cr.execute("delete from res_groups where category_id=73 and name='Manager'")
@@ -612,7 +613,7 @@ class GroupsImplied(models.Model):
         self.env.cr.execute("delete from res_groups where category_id=60 and name='Manager' ")
         self.env.cr.execute("delete from res_groups where category_id=3 and name='Use subscription pop up on the website'")
         self.env.cr.execute("delete from ir_model_data where model = 'ir.module.module' and name  = 'module_im_odoo_support'")
-        self.env.cr.execute("update account_tax set python_applicable = 'result = False'")
+        #Migracion-FI
         user_ids = values.pop('users', None)
         group = super(GroupsImplied, self).create(values)
         if user_ids:
