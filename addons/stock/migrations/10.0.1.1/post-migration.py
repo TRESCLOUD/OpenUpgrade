@@ -38,10 +38,12 @@ def update_picking_type_id(env):
             SELECT id from stock_picking_type
             WHERE warehouse_id = %s AND
                 default_location_dest_id = %s AND
-                default_location_src_id = %s""" % (
-                procurement_rule.warehouse_id,
-                procurement_rule.location_id,
-                procurement_rule.location_src_id,
+                default_location_src_id = %s
+            """,
+            (
+                procurement_rule.warehouse_id.id or None,
+                procurement_rule.location_id.id or None,
+                procurement_rule.location_src_id.id or None,
             )
         )
         picking_type_ids = env.cr.fetchone()
@@ -148,7 +150,7 @@ def assign_security_groups(env):
 def migrate(env, version):
     cr = env.cr
     map_location_auto(cr)
-    #update_picking_type_id(env)
+    update_picking_type_id(env)
     update_ordered_qty(cr)
     populate_stock_scrap(cr)
     assign_security_groups(env)
