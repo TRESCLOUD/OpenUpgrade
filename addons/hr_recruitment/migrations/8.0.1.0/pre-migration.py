@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2014 Therp BV
+#    OpenERP, Open Source Management Solution
+#    This migration script copyright (C) 2010-2014 Akretion
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,27 +19,11 @@
 #
 ##############################################################################
 
-import logging
+
 from openerp.openupgrade import openupgrade
-
-logger = logging.getLogger('OpenUpgrade.purchase')
-
-
-column_renames = {
-    'procurement_order': [('purchase_id', None)],
-    'purchase_order_line': [('move_dest_id', None)],
-    }
-
-
-def create_field_reception_to_invoice(cr):
-    cr.execute("""
-        ALTER TABLE "stock_picking"
-        ADD COLUMN "reception_to_invoice" bool DEFAULT False""")
-    logger.info(
-        "Fast creation of the field stock_picking.reception_to_invoice")
 
 
 @openupgrade.migrate()
 def migrate(cr, version):
-    openupgrade.rename_columns(cr, column_renames)
-    create_field_reception_to_invoice(cr)
+    execute = openupgrade.logged_query
+    execute(cr, "UPDATE hr_applicant SET response = NULL WHERE response = 0")
