@@ -76,3 +76,10 @@ def migrate(cr, version):
             ('mass_mailing_security_group', 'mass_mailing'),
         ], merge_modules=True,
     )
+
+    # Modificado por TRESCLOUD, mapeo de modulos
+    openupgrade.update_module_names(
+        cr, [
+            ('l10n_ec_niif_minimal', 'l10n_ec'),
+        ], merge_modules=True,
+    )
