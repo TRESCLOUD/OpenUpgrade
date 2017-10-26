@@ -99,6 +99,7 @@ def migrate(cr, version):
             ('contract','l10n_ec'),
             ('crm_default_sales_team','l10n_ec'),
             ('crm_todo','l10n_ec'),
+            ('crm_claim','l10n_ec'),
             ('ecua_2015_tax','l10n_ec'),
             ('ecua_account_reconciliation_enhancements','l10n_ec'),
             ('ecua_ats_report','l10n_ec'),
