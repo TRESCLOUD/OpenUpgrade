@@ -223,14 +223,28 @@ def backup_fields_account_invoice(cr):
     por verificacion, si el campo no existe no se lo copia
     '''
     columns_backup = (
+        # Proyecto X
         'amount_subtotal',
         'amount_discount',
+        'amount_tax_retention',
+        'amount_ret_vat'
+        # Base odoo
         'amount_untaxed',
         'amount_tax',
         'amount_total',
         'residual',
-        'amount_tax_retention',
-        'amount_ret_vat'
+        # TRESCLOUD
+        'amount_total',
+        'total_iva',
+        'total_to_withhold',
+        'total_undiscounted',
+        'base_doce_iva',
+        'total_with_vat',
+        'base_cero_iva',
+        'vat_percent_value',
+        'vat_doce_subtotal',
+        'vat_cero_subtotal',
+        'vat_percent'
         )
     for column in columns_backup:
         # Verificando que exista
