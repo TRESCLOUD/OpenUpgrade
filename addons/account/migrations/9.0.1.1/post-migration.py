@@ -662,6 +662,19 @@ def fill_bank_accounts(cr):
         AND rpb.journal_id = aj.id"""
     )
 
+@openupgrade.logging()
+def actualizar_calculo_impuesto(cr):
+    '''
+    Metodo para actualizar campos python_compute,python_applicable de los impuestos 
+    y que asi se recalculen los impuestos durante la migracion
+    
+    '''
+    cr.execute("""
+    Update account_tax set
+    python_compute = '', 
+    python_applicable = 'result = True'
+    where amount_type = 'percent';    
+    """)
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
@@ -761,3 +774,5 @@ def migrate(env, version):
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
     )
+    # Agregado Por TRESCLOUD
+    actualizar_calculo_impuesto(cr)
