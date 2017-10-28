@@ -32,16 +32,25 @@ def map_order_state(cr):
 def backup_fields_purchase_order(cr):
     '''
     Metodo para respaldar campos funcionales de la tabla purchase_order
+    Debido a que son campos variados de proyecto X se realizara
+    por verificacion, si el campo no existe no se lo copia
     '''
-    column_copies_po = {
-                    'purchase_order': [
-                        ('amount_without_service', None, None),
-                        ('amount_tax', None, None),
-                        ('amount_total', None, None),
-                        ('amount_untaxed', None, None),
+    columns_backup = (
+        # Proyecto X
+        'amount_without_service',
+        # Base odoo
+        'amount_tax',
+        'amount_total',
+        'amount_untaxed',
+        )
+    for column in columns_backup:
+        # Verificando que exista
+        if openupgrade.column_exists(cr, 'purchase_order', column):
+            openupgrade.copy_columns(cr, {
+                'purchase_order': [
+                    (column, None, None),
                     ],
-                    }
-    openupgrade.copy_columns(cr, column_copies_po)
+                })
 
 def backup_fields_purchase_order_line(cr):
     '''
