@@ -234,7 +234,6 @@ def backup_fields_account_invoice(cr):
         'amount_total',
         'residual',
         # TRESCLOUD
-        'amount_total',
         'total_iva',
         'total_to_withhold',
         'total_undiscounted',
