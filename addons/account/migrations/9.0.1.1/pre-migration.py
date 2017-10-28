@@ -219,20 +219,27 @@ def blacklist_field_recomputation(env):
 def backup_fields_account_invoice(cr):
     '''
     Metodo para respaldar campos funcionales de la tabla account_invoice
+    Debido a que son campos variados de proyecto X y TRESCLOUD se realizara
+    por verificacion, si el campo no existe no se lo copia
     '''
-    column_copies_ai = {
-                    'account_invoice': [
-                        ('amount_subtotal', None, None),
-                        ('amount_discount', None, None),
-                        ('amount_untaxed', None, None),
-                        ('amount_tax', None, None),
-                        ('amount_total', None, None),
-                        ('residual', None, None),
-                        ('amount_tax_retention', None, None),
-                        ('amount_ret_vat', None, None),
+    columns_backup = (
+        'amount_subtotal',
+        'amount_discount',
+        'amount_untaxed',
+        'amount_tax',
+        'amount_total',
+        'residual',
+        'amount_tax_retention',
+        'amount_ret_vat'
+        )
+    for column in columns_backup:
+        # Verificando que exista
+        if openupgrade.column_exists(cr, 'account_invoice', column):
+            openupgrade.copy_columns(cr, {
+                'account_invoice': [
+                    (column, None, None),
                     ],
-                    }
-    openupgrade.copy_columns(cr, column_copies_ai)
+                })
 
 def backup_fields_account_invoice_line(cr):
     '''
