@@ -19,6 +19,11 @@ def create_payments_from_vouchers(env):
     # Not used here.
     # As far as I can see there is no connection between invoices in 8.0
     # that we can or have to migrate to 9.0.
+    #
+    #
+    # TRESCLOUD: Se agregan los pagos en estado 'cancel' para su analisis
+    # debido a que el modulo que lo agrega no esta en los core de Odoo
+    
     env.cr.execute(
         """\
         INSERT INTO account_payment (
@@ -53,7 +58,7 @@ def create_payments_from_vouchers(env):
             av.reference
         FROM account_voucher av
         WHERE av.voucher_type IN ('receipt', 'payment')
-        AND av.state in ('draft', 'posted')
+        AND av.state in ('draft', 'posted', 'cancel')
         """,
         (receipt_method.id,
          payment_method.id)
