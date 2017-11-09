@@ -869,6 +869,13 @@ def actualizar_calculo_impuesto(cr):
     python_applicable = 'result = True'
     where amount_type = 'percent';    
     """)
+    
+def map_value_payment_term(cr):   
+    '''
+    Metodo para setear campo value a 'percent' debido a que cambio la lista selection 
+    '''
+    cr.execute
+    ("""update account_payment_term_line set value = 'percent' where value = 'procent'""") 
 
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
@@ -971,3 +978,6 @@ def migrate(env, version):
     )
     # Agregado Por TRESCLOUD
     actualizar_calculo_impuesto(cr)
+    map_value_payment_term(cr)
+    
+    
