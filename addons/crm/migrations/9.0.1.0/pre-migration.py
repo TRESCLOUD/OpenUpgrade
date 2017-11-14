@@ -74,6 +74,7 @@ def migrate_tracking_source(cr):
         'update crm_lead set source_id=s.id '
         'from utm_source s where crm_tracking_source_id=source_id')
 
+@openupgrade.logging()
 def backup_stage_id(cr):
     '''
     Metodo para respaldar valor del campo stage_id para posterior mapeo
