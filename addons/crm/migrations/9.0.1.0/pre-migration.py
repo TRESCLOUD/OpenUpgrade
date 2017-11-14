@@ -81,7 +81,8 @@ def backup_stage_id(cr):
     '''
     column_copies_s = {
                     'crm_lead': [
-                        ('stage_id', None, None),                    ],
+                        ('stage_id', None, None),                    
+                    ],
                     }
     openupgrade.copy_columns(cr, column_copies_s)
 
