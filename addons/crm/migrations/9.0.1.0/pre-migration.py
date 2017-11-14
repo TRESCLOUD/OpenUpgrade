@@ -74,6 +74,17 @@ def migrate_tracking_source(cr):
         'update crm_lead set source_id=s.id '
         'from utm_source s where crm_tracking_source_id=source_id')
 
+@openupgrade.logging()
+def backup_stage_id(cr):
+    '''
+    Metodo para respaldar valor del campo stage_id para posterior mapeo
+    '''
+    column_copies_s = {
+                    'crm_lead': [
+                        ('stage_id', None, None),                    
+                    ],
+                    }
+    openupgrade.copy_columns(cr, column_copies_s)
 
 @openupgrade.migrate()
 def migrate(cr, version):
@@ -92,3 +103,4 @@ def migrate(cr, version):
     # Needed for crm_lead_lost_reason migration
     cr.execute("ALTER TABLE IF EXISTS crm_lead_lost_reason "
                "RENAME TO crm_lost_reason")
+    backup_stage_id(cr)
