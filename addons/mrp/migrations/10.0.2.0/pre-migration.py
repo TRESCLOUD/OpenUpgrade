@@ -7,6 +7,10 @@ from openupgradelib import openupgrade
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
     # create an xmlid for mail.bounce.alias is it exists
-    cr.execute(
-        """DROP VIEW mrp_workorder"""
-    )
+    try:
+        cr.execute(
+            """DROP VIEW mrp_workorder"""
+        )
+    except:
+        _logger.error('Error al borrar la vista mrp_workorder')
+    
