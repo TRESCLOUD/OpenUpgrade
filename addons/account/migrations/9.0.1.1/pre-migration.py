@@ -8,9 +8,6 @@
 from openupgradelib import openupgrade
 
 column_renames = {
-    'account_bank_statement': [
-        ('closing_date', 'date_done'),
-    ],
     'account_account_type': [
         ('close_method', None),
     ],
@@ -27,6 +24,67 @@ column_renames = {
         ('bank_statement_id', None),
     ]
 }
+
+field_renames = [
+    ('account.bank.statement', 'account_bank_statement', 'closing_date',
+     'date_done'),
+    # renamings with oldname attribute - They also need the rest of operations
+    ('account.account', 'account_account', 'user_type', 'user_type_id'),
+    ('account.account.template', 'account_account_template', 'user_type',
+     'user_type_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_expense', 'property_account_expense_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_expense_categ', 'property_account_expense_categ_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_income', 'property_account_income_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_income_categ', 'property_account_income_categ_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_payable', 'property_account_payable_id'),
+    ('account.chart.template', 'account_chart_template',
+     'property_account_receivable', 'property_account_receivable_id'),
+    ('account.invoice', 'account_invoice', 'fiscal_position',
+     'fiscal_position_id'),
+    ('account.invoice', 'account_invoice', 'invoice_line', 'invoice_line_ids'),
+    ('account.invoice', 'account_invoice', 'payment_term', 'payment_term_id'),
+    ('account.invoice', 'account_invoice', 'tax_line', 'tax_line_ids'),
+    ('account.invoice.line', 'account_invoice_line', 'invoice_line_tax_id',
+     'invoice_line_tax_ids'),
+    ('account.invoice.line', 'account_invoice_line', 'uos_id', 'uom_id'),
+    ('account.journal', 'account_journal', 'currency', 'currency_id'),
+    ('account.move.line', 'account_move_line', 'analytic_lines',
+     'analytic_line_ids'),
+    ('account.move.line', 'account_move_line', 'invoice', 'invoice_id'),
+    ('account.tax', 'account_tax', 'account_collected_id', 'account_id'),
+    ('account.tax', 'account_tax', 'account_paid_id', 'refund_account_id'),
+    ('account.tax', 'account_tax', 'type', 'amount_type'),
+    ('account.tax.template', 'account_tax_template', 'account_collected_id',
+     'account_id'),
+    ('account.tax.template', 'account_tax_template', 'account_paid_id',
+     'refund_account_id'),
+    ('product.category', 'product_category', 'property_account_expense_categ',
+     'property_account_expense_categ_id'),
+    ('product.category', 'product_category', 'property_account_income_categ',
+     'property_account_income_categ_id'),
+    ('product.template', 'product_template', 'property_account_expense',
+     'property_account_expense_id'),
+    ('product.template', 'product_template', 'property_account_income',
+     'property_account_income_id'),
+    ('res.partner', 'res_partner', 'last_reconciliation_date',
+     'last_time_entries_checked'),
+    ('res.partner', 'res_partner', 'property_account_payable',
+     'property_account_payable_id'),
+    ('res.partner', 'res_partner', 'property_account_position',
+     'property_account_position_id'),
+    ('res.partner', 'res_partner', 'property_account_receivable',
+     'property_account_receivable_id'),
+    ('res.partner', 'res_partner', 'property_payment_term',
+     'property_payment_term_id'),
+    ('res.partner', 'res_partner', 'property_supplier_payment_term',
+     'property_supplier_payment_term_id'),
+    ('res.partner', 'res_partner', 'ref_companies', 'ref_company_ids'),
+]
 
 column_copies = {
     'account_bank_statement': [
@@ -53,9 +111,15 @@ table_renames = [
     ('account_tax_code', 'account_tax_group')]
 
 xmlid_renames = [
-    ('account.conf_account_type_equity', 'account.data_account_type_equity'), 
+    ('account.conf_account_type_equity', 'account.data_account_type_equity'),
     ('account.data_account_type_income', 'account.data_account_type_revenue'),
     ('account.data_account_type_bank', 'account.data_account_type_liquidity'),
+    ('account.data_account_type_asset',
+     'account.data_account_type_current_assets'),
+    ('account.data_account_type_liability',
+     'account.data_account_type_current_liabilities'),
+    ('account.data_account_type_expense',
+     'account.data_account_type_expenses'),
 ]
 
 PROPERTY_FIELDS = {
@@ -63,6 +127,10 @@ PROPERTY_FIELDS = {
      'property_account_expense_categ_id'),
     ('product.category', 'property_account_income_categ',
      'property_account_income_categ_id'),
+    ('product.template', 'property_account_income',
+     'property_account_income_id'),
+    ('product.template', 'property_account_expense',
+     'property_account_expense_id'),
     ('res.partner', 'property_account_payable', 'property_account_payable_id'),
     ('res.partner', 'property_account_receivable',
      'property_account_receivable_id'),
@@ -89,28 +157,12 @@ def migrate_properties(cr):
             """.format(name_v8=name_v8, name_v9=name_v9))
 
 
-def no_remove_moves_exception_modules():
-    """ In some countries the odoo standard closing procedure is not used,
-    and the special periods should not be deleted."""
-    return ['l10n_es_fiscal_year_closing']
-
-
 def remove_account_moves_from_special_periods(cr):
     """We first search for journal entries in a special period, in the
     first reported fiscal year of the company, and we take them out of the
     special period, into a normal period, because we assume that this is
     the starting balance of the company, and should be maintained.
     Then we delete all the moves associated to special periods."""
-
-    module_names = no_remove_moves_exception_modules()
-    cr.execute("""
-        SELECT * FROM ir_module_module
-        WHERE name in %s
-        AND state='installed'
-    """, (tuple(module_names),))
-    if cr.fetchall():
-        return True
-
     cr.execute("""
         SELECT id FROM account_move
         WHERE period_id in (SELECT id FROM account_period WHERE special = True
@@ -164,12 +216,23 @@ def map_account_tax_type(cr):
     """ The tax type 'code' is not an option in the account module for v9.
     We need to assign a temporary 'dummy' value until module
     account_tax_python is installed. In post-migration we will
-    restore the original value."""
+    restore the original value.
+
+    Also, the value `none` is not accepted anymore. We switch to `percent` +
+    value = 0.
+    """
     openupgrade.map_values(
         cr,
         openupgrade.get_legacy_name('type'), 'type',
         [('code', 'group')],
         table='account_tax', write='sql')
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_tax
+        SET type='percent',
+            amount=0.0
+        WHERE type='none'""",
+    )
 
 
 def map_account_tax_template_type(cr):
@@ -179,6 +242,21 @@ def map_account_tax_template_type(cr):
         openupgrade.get_legacy_name('type'), 'type',
         [('code', 'group')],
         table='account_tax_template', write='sql')
+
+
+def map_payment_term_line_value(cr):
+    """ Someone fixed a Flemishism and payment terms percentages are now
+    over 100, not over 1.
+    """
+    openupgrade.logged_query(
+        cr,
+        """UPDATE account_payment_term_line
+        SET value = 'percent' WHERE value = 'procent';""")
+    openupgrade.logged_query(
+        cr, """
+        UPDATE account_payment_term_line
+        SET value_amount = value_amount * 100 WHERE value = 'percent'""",
+    )
 
 
 def blacklist_field_recomputation(env):
@@ -292,6 +370,15 @@ def merge_supplier_invoice_refs(env):
     )
 
 
+def set_date_maturity(env):
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE account_move_line
+        SET date_maturity = date
+        WHERE date_maturity IS NULL"""
+    )
+
+
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
@@ -311,6 +398,9 @@ def migrate(env, version):
     install_account_tax_python(cr)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
+    map_payment_term_line_value(cr)
     remove_account_moves_from_special_periods(cr)
     blacklist_field_recomputation(env)
     merge_supplier_invoice_refs(env)
+    openupgrade.rename_fields(env, field_renames)
+    set_date_maturity(env)
