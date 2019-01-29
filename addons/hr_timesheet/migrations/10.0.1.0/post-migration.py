@@ -22,7 +22,7 @@ def migrate_missing_projects(env):
     """Create a project and link it to the orphaned analytic accounts"""
     env.cr.execute(
         """
-        SELECT aaa.id, aaa.company_id, aaa.name
+        SELECT aaa.id, aaa.company_id, aaa.name, aaa.active
         FROM account_analytic_account aaa
         LEFT JOIN project_project pp ON pp.analytic_account_id = aaa.id
         WHERE %s = True
@@ -38,6 +38,7 @@ def migrate_missing_projects(env):
             'analytic_account_id': aaa_row[0],
             'company_id': aaa_row[1],
             'name': aaa_row[2],
+            'active': aaa_row[3],
             'allow_timesheets': True,
         })
 
@@ -56,7 +57,7 @@ def fill_analytic_line_project(env):
         AND aal.project_id IS NULL
         """,
     )
-    if openupgrade.is_module_installed(env.cr, 'project_issue'):
+    if openupgrade.is_module_installed(env.cr, 'project_issue_sheet'):
         openupgrade.logged_query(
             env.cr,
             """

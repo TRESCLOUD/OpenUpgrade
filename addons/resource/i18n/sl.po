@@ -3,7 +3,7 @@
 # * resource
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
@@ -344,6 +344,12 @@ msgid "Sunday"
 msgstr "Nedelja"
 
 #. module: resource
+#: code:addons/resource/models/resource.py:714
+#, python-format
+msgid "The efficiency factor cannot be equal to 0."
+msgstr ""
+
+#. module: resource
 #: model:ir.model.fields,help:resource.field_resource_resource_time_efficiency
 msgid ""
 "This field depict the efficiency of the resource to complete tasks. e.g  "
@@ -351,7 +357,7 @@ msgid ""
 "show a load of 100% for this phase by default, but if we put a efficiency of"
 " 200%, then his load will only be 50%."
 msgstr ""
-"Polje prikazuje učinkovitost vira za zaključek nalog. Npr.: uporaba samo "
+"Polje prikazuje učinkovitost vira za zaključek opravil. Npr.: uporaba samo "
 "tega vira na fazi 5 dni s 5 prirejenimi nalogami, bo prikazala 100% "
 "zasedenost za to fazo; če pa vpišemo učinkovitost 200%, bo njegova "
 "zasedenost samo 50%."

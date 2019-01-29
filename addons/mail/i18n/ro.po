@@ -3,16 +3,17 @@
 # * mail
 # 
 # Translators:
-# Dorin Hongu <dhongu@gmail.com>, 2016
 # Cozmin Candea <office@terrabit.ro>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
+# Dorin Hongu <dhongu@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-14 15:53+0000\n"
-"PO-Revision-Date: 2016-11-14 15:53+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
+"PO-Revision-Date: 2016-09-07 09:22+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>, 2018\n"
 "Language-Team: Romanian (https://www.transifex.com/odoo/teams/41243/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -196,6 +197,8 @@ msgstr ""
 #, python-format
 msgid " This channel is private. People must be invited to join it."
 msgstr ""
+"Acest canal este privat. Persoanele trebuie invitate pentru a se alatura la "
+"el."
 
 #. module: mail
 #: model:mail.template,subject:mail.mail_template_data_notification_email_default
@@ -272,6 +275,18 @@ msgstr ""
 "            Puteți insera răspunsuri predefinite tastând <b>:shortcut</b>.<br>"
 
 #. module: mail
+#: code:addons/mail/models/mail_channel.py:475
+#, python-format
+msgid ""
+"<div class=\"o_mail_notification\">%(author)s invited %(new_partner)s to <a "
+"href=\"#\" class=\"o_channel_redirect\" data-oe-"
+"id=\"%(channel_id)s\">#%(channel_name)s</a></div>"
+msgstr ""
+"<div class=\"o_mail_notification\">%(author)s a invitat%(new_partner)s la<a "
+"href=\"#\" class=\"o_channel_redirect\" data-oe-"
+"id=\"%(channel_id)s\">#%(channel_name)s</a></div>"
+
+#. module: mail
 #: code:addons/mail/models/mail_channel.py:550
 #, python-format
 msgid ""
@@ -289,6 +304,8 @@ msgid ""
 "<div class=\"o_mail_notification\">joined <a href=\"#\" "
 "class=\"o_channel_redirect\" data-oe-id=\"%s\">#%s</a></div>"
 msgstr ""
+"<div class=\"o_mail_notification\"> alăturat <a href=\"#\" "
+"class=\"o_channel_redirect\" data-oe-id=\"%s\">#%s</a></div>"
 
 #. module: mail
 #: code:addons/mail/models/mail_channel.py:168
@@ -2922,7 +2939,7 @@ msgstr "Mesajele noi vor apărea aici."
 #: code:addons/mail/static/src/js/client_action.js:79
 #, python-format
 msgid "New people"
-msgstr ""
+msgstr "Persoană nouă"
 
 #. module: mail
 #. openerp-web
@@ -3309,7 +3326,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/client_action.xml:48
 #, python-format
 msgid "Open chat"
-msgstr ""
+msgstr "Deschide conversație"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_res_partner_opt_out
@@ -3865,7 +3882,7 @@ msgstr ""
 #: code:addons/mail/static/src/xml/client_action.xml:97
 #, python-format
 msgid "Sends messages by email"
-msgstr ""
+msgstr "Trimiți mesaje prin email"
 
 #. module: mail
 #: model:ir.ui.view,arch_db:mail.view_mail_search selection:mail.mail,state:0
@@ -4590,7 +4607,7 @@ msgstr "Cine poate urmări activitățile grupului?"
 #: code:addons/mail/static/src/xml/composer.xml:18
 #, python-format
 msgid "Write something..."
-msgstr "Scriere ceva..."
+msgstr "Scrie ceva..."
 
 #. module: mail
 #. openerp-web
@@ -4622,7 +4639,7 @@ msgstr ""
 #: code:addons/mail/models/mail_channel.py:637
 #, python-format
 msgid "You are in channel <b>#%s</b>."
-msgstr ""
+msgstr "Sunteți în canal </b> %s</b>."
 
 #. module: mail
 #. openerp-web
@@ -4660,14 +4677,14 @@ msgstr ""
 #. module: mail
 #: model:ir.ui.view,arch_db:mail.message_user_assigned
 msgid "You have been assigned to the"
-msgstr ""
+msgstr "Ați fost asignat la "
 
 #. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/chat_manager.js:620
 #, python-format
 msgid "You have been invited to: "
-msgstr ""
+msgstr "Ați fost invitat la:"
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_email_template_preview_attachment_ids
@@ -4892,7 +4909,7 @@ msgstr "înregistrare:"
 #: code:addons/mail/models/mail_thread.py:935
 #, python-format
 msgid "reply to missing document (%s,%s)"
-msgstr ""
+msgstr "răspundeți la documentul lipsă (%s, %s)"
 
 #. module: mail
 #: code:addons/mail/models/mail_thread.py:928
@@ -4920,7 +4937,7 @@ msgstr "vânzări"
 #: code:addons/mail/models/mail_thread.py:968
 #, python-format
 msgid "skipping"
-msgstr ""
+msgstr "livrare"
 
 #. module: mail
 #. openerp-web
