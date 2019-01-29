@@ -68,21 +68,6 @@ _xmlid_renames = [
     ('base.menu_mrp_root', 'mrp.menu_mrp_root'),
 ]
 
-def delete_mrp_workorder(cr):
-    """
-    Se borra la vista mrp_workorder
-    """
-    cr.execute(
-        """SELECT * FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_name = 'mrp_workorder'"""
-    )
-    record = cr.fetchall()
-    if record:
-            cr.execute(
-            """DROP VIEW mrp_workorder"""
-        )    
-
 def delete_old_workorder_model(cr):
     """Delete old mrp.workorder model that was a report."""
     openupgrade.logged_query(
@@ -174,7 +159,6 @@ def prepopulate_fields(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
-    delete_mrp_workorder(cr)
     rename_mrp_workorder(cr)
     openupgrade.copy_columns(cr, _column_copies)
     if openupgrade.column_exists(cr, 'mrp_workorder', 'state'):
@@ -186,4 +170,3 @@ def migrate(env, version):
     openupgrade.rename_fields(env, _field_renames)
     prepopulate_fields(cr)
     openupgrade.rename_xmlids(cr, _xmlid_renames)
-    

@@ -188,10 +188,6 @@ def migrate(cr, version):
         'res.lang', id
         from res_lang''')
     ensure_country_state_id_on_existing_records(cr)
-    openupgrade.update_module_names(
-        cr, apriori.merged_modules, merge_modules=True,
-    )
-
     # Modificado por TRESCLOUD, mapeo de modulos
     openupgrade.update_module_names(
         cr, [
@@ -274,4 +270,6 @@ def migrate(cr, version):
             ('web_printscreen_zb','l10n_ec'),
             ('web_shortcuts','l10n_ec'),
         ], merge_modules=True,
+    openupgrade.update_module_names(
+        cr, apriori.merged_modules, merge_modules=True,
     )
