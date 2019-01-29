@@ -46,14 +46,15 @@ def amount_account_voucher(cr):
 def amount_account_voucher_line(cr):
     '''
     Metodo para respaldar campo amount de la tabla account_voucher_line,
-    debido a quee en version 9 el campo se transforma en funcion
+    debido a que en version 9 el campo se transforma en funcion
     '''
     column_copies_avl = {
                     'account_voucher_line': [
                         ('amount', None, None),
                     ],
                     }
-    openupgrade.copy_columns(cr, column_copies_avl)
+    if openupgrade.column_exists(cr, 'account_voucher_line', 'amount'):
+        openupgrade.copy_columns(cr, column_copies_avl)
      
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
