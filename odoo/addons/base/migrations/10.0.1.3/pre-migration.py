@@ -270,6 +270,7 @@ def migrate(cr, version):
             ('web_printscreen_zb','l10n_ec'),
             ('web_shortcuts','l10n_ec'),
         ], merge_modules=True,
+    )
     openupgrade.update_module_names(
         cr, apriori.merged_modules, merge_modules=True,
     )
