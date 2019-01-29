@@ -89,7 +89,7 @@ def backup_fields_sale_order_line(cr):
 @openupgrade.migrate()
 def migrate(cr, version):
     openupgrade.rename_columns(cr, column_renames)
-    openupgrade.rename_fields(env, field_renames)
+    openupgrade.rename_fields(cr, field_renames)
     openupgrade.copy_columns(cr, column_copies)
     openupgrade.rename_tables(cr, table_renames)
     map_order_state(cr)
