@@ -105,7 +105,6 @@ def migrate(env, version):
         [('4', '3')], table='crm_lead',
     )
     cr.execute("update crm_lead set type='opportunity' where type is null")
-               "RENAME TO crm_lost_reason")
     if openupgrade.table_exists(cr, 'crm_lead_lost_reason'):
         openupgrade.rename_tables(cr, [('crm_lead_lost_reason', 'crm_lost_reason')])
     backup_stage_id(cr)
