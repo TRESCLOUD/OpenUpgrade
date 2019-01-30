@@ -215,7 +215,7 @@ def migrate(cr, version):
             ('ecua_account_reconciliation_enhancements','l10n_ec'),
             ('ecua_ats_report','l10n_ec'),
             ('ecua_cities','l10n_ec'),
-            ('ecua_sri_refund','ecua_refund'),
+            ('ecua_sri_refund','l10n_ec'),
             ('ecua_refund','l10n_ec'),
             ('ecua_tax','l10n_ec'),
             ('edi','l10n_ec'),
