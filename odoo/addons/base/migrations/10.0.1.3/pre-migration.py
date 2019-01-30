@@ -215,8 +215,9 @@ def migrate(cr, version):
             ('ecua_account_reconciliation_enhancements','l10n_ec'),
             ('ecua_ats_report','l10n_ec'),
             ('ecua_cities','l10n_ec'),
-            ('ecua_sri_refund','l10n_ec'),
             ('ecua_refund','l10n_ec'),
+            ('ecua_sri_refund','l10n_ec'),
+            ('ecua_sri_refund_sales','l10n_ec'),
             ('ecua_tax','l10n_ec'),
             ('edi','l10n_ec'),
             ('fdu_motd','l10n_ec'),
@@ -270,6 +271,7 @@ def migrate(cr, version):
             ('web_pdf_preview','l10n_ec'),
             ('web_printscreen_zb','l10n_ec'),
             ('web_shortcuts','l10n_ec'),
+            ('ecua_sri_refund_sales','l10n_ec'),
         ], merge_modules=True,
     )
     openupgrade.update_module_names(
