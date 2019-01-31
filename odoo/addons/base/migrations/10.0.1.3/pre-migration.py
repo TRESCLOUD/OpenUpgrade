@@ -271,7 +271,6 @@ def migrate(cr, version):
             ('web_pdf_preview','l10n_ec'),
             ('web_printscreen_zb','l10n_ec'),
             ('web_shortcuts','l10n_ec'),
-            ('ecua_sri_refund_sales','l10n_ec'),
         ], merge_modules=True,
     )
     openupgrade.update_module_names(
