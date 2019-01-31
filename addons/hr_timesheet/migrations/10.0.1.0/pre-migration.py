@@ -19,7 +19,7 @@ def create_and_populate_department(cr):
           SELECT r.user_id AS user_id, MAX(e.department_id) AS dpt_id
              FROM hr_employee e JOIN resource_resource r
                                 ON e.resource_id = r.id
-          GROUP BY user_id
+          GROUP BY r.user_id
        )
        UPDATE account_analytic_line aal SET department_id=departments.dpt_id
        FROM departments WHERE aal.user_id = departments.user_id;
