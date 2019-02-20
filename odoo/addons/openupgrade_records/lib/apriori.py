@@ -23,6 +23,8 @@ renamed_modules = {
     'report_mrp_bom_matrix': 'mrp_bom_matrix_report',
     # OCA/partner-contact:
     'res_partner_affiliate': 'partner_affiliate',
+    # OCA/project
+    'project_task_materials': 'project_task_material',
     # OCA/sale-workflow:
     'sale_delivery_block': 'sale_stock_picking_blocking',
     'sale_delivery_block_proc_group_by_line':
@@ -68,6 +70,7 @@ merged_modules = [
     ('web_easy_switch_company', 'web'),
     # OCA/website
     ('website_blog_mgmt', 'website_blog'),
+    ('website_blog_share', 'website_blog'),
 ]
 
 renamed_models = {
