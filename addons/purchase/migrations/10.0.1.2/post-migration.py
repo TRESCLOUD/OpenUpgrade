@@ -9,13 +9,15 @@ from openupgradelib import openupgrade
 def migracion_impuestos_compras(cr):  
     '''
     Metodo para migrar los impuestos de las ordenes de compra
+    siempre que la tabla purchase_order_taxe exista
     '''
-    cr.execute(
-        """
-        INSERT INTO account_tax_purchase_order_line_rel(
-        purchase_order_line_id, account_tax_id)
-        select ord_id, tax_id from purchase_order_taxe
-        """)
+    if openupgrade.table_exists(cr, 'purchase_order_taxe'):
+        cr.execute(
+            """
+            INSERT INTO account_tax_purchase_order_line_rel(
+            purchase_order_line_id, account_tax_id)
+            select ord_id, tax_id from purchase_order_taxe
+            """)
 
 @openupgrade.migrate(use_env=False)
 def migrate(cr, version):
