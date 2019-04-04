@@ -1235,7 +1235,8 @@ def migrate(env, version):
 
     parent_id_to_tag(env, 'account.tax')
     parent_id_to_tag(env, 'account.account', recursive=True)
-    move_view_accounts(env)
+    # comentado por TRESCLOUD
+    #move_view_accounts(env)
     account_internal_type(env)
     map_account_tax_type(cr)
     map_account_tax_template_type(cr)
