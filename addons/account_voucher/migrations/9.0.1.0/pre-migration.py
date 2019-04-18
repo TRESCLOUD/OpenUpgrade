@@ -59,6 +59,9 @@ def amount_account_voucher_line(cr):
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
+    #Metodos para respaldar campos
+    amount_account_voucher(cr)
+    amount_account_voucher_line(cr)
     cr.execute('update account_voucher_line set amount=0 where amount is null')
     cr.execute("update account_voucher_line set name='/' where name is null")
     openupgrade.copy_columns(cr, column_copies)
@@ -76,7 +79,4 @@ def migrate(env, version):
             'price_subtotal'
         )
     
-    #Metodos para respaldar campos
-    amount_account_voucher(cr)
-    amount_account_voucher_line(cr)
     
