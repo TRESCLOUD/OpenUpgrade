@@ -247,6 +247,7 @@ def migrate(cr, version):
             ('report_aeroo_ooo','l10n_ec'),
             ('report_webkit','l10n_ec'),
             ('sale_ingredients','l10n_ec'),
+            ('sale_order_for_retail','ecua_pos_invoice'),
             ('sale_pricelist_recalculation','l10n_ec'),
             ('sale_validity_term','l10n_ec'),
             ('stock_analytic','l10n_ec'),
