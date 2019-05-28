@@ -282,7 +282,8 @@ def migrate(cr, version):
             ('trescloud_remove_traduction_product','l10n_ec'),
             ('sale_order_for_retail','ecua_pos_invoice'),
             ('account_analytic_analysis','l10n_ec'),
-            ('trescloud_partner_related_phone_meet_opportunity','l10n_ec')
+            ('trescloud_partner_related_phone_meet_opportunity','l10n_ec'),
+            ('trescloud_remove_traduction_product','l10n_ec')
         ], merge_modules=True,
     )
     openupgrade.update_module_names(
