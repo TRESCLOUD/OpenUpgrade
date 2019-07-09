@@ -235,7 +235,7 @@ def image_product_move_field_m2o(
                         cr, SUPERUSER_ID, res[0],
                         {field_new_model: res[1][:]})
                 except:
-                    _logger.info("Imagen de producto con problemas: %s", (str(res),))
+                    logger.info("Imagen de producto con problemas: %s", (str(res),))
             else:
                 pool[registry_new_model].write(
                     cr, SUPERUSER_ID, res[0],
