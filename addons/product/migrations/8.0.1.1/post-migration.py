@@ -230,12 +230,14 @@ def image_product_move_field_m2o(
         cr.execute(query, [tuple(ok_ids)])
         for res in cr.fetchall():
             if res[1] and binary_field:
+                #MODIFICADO POR TRESCLOUD
                 try:
                     pool[registry_new_model].write(
                         cr, SUPERUSER_ID, res[0],
                         {field_new_model: res[1][:]})
                 except:
                     logger.info("Imagen de producto con problemas: %s", (str(res),))
+                #########################
             else:
                 pool[registry_new_model].write(
                     cr, SUPERUSER_ID, res[0],
