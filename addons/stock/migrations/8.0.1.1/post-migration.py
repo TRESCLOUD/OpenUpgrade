@@ -931,11 +931,16 @@ def migrate_stock_qty(cr, registry):
         env = api.Environment(cr, SUPERUSER_ID, {})
         moves = env['stock.move'].search(
             [('state', 'in', ['assign', 'done'])], order="date")
+        #siguiente lineas agregadas por trescloud.
+        move_total = len(moves)
+        count = 1
         for move in moves:
+            logger.info("ID: %s, %s de %s "%(move.id , count, move_total))
             if move.state == 'assign':
                 _move_assign(env, move)
             else:
                 _move_done(env, move)
+            count += 1
 
 
 def migrate_stock_production_lot(cr, registry):
