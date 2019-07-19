@@ -926,22 +926,31 @@ def migrate_stock_qty(cr, registry):
         UPDATE stock_move SET restrict_lot_id = {}
     '''.format(openupgrade.get_legacy_name('prodlot_id'))
     openupgrade.logged_query(cr, sql)
-
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
-        moves = env['stock.move'].search(
-            [('state', 'in', ['assign', 'done'])], order="date")
-        #siguiente lineas agregadas por trescloud.
-        move_total = len(moves)
+        cr.execute("""
+            SELECT count(*) 
+            from stock_move;""")
+        move_total = cr.fetchall()[0][0]
         count = 1
-        for move in moves:
-            logger.info("ID: %s, %s de %s "%(move.id , count, move_total))
-            if move.state == 'assign':
-                _move_assign(env, move)
-            else:
-                _move_done(env, move)
-            count += 1
-
+        for state in ('done', 'assign'):
+            offset = 0
+            while True:
+                # Filtrado y analisis por el estado de la salida de inventario
+                moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=50000)
+                offset += 50000
+                if not moves:
+                    break
+                move_total += len(moves)
+                for move in moves:
+                    logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
+                    if state == 'assign':
+                        _move_assign(env, move)
+                    else:
+                        _move_done(env, move)
+                    count += 1
+                logger.info("enviado commit a base de datos!")
+                cr.commit()
 
 def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
