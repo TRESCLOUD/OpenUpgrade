@@ -937,20 +937,27 @@ def migrate_stock_qty(cr, registry):
             offset = 0
             while True:
                 # Filtrado y analisis por el estado de la salida de inventario
-                moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=50000)
-                offset += 50000
+                moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=30000)
+                offset += 30000
                 if not moves:
                     break
-                move_total += len(moves)
-                for move in moves:
-                    logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
-                    if state == 'assign':
-                        _move_assign(env, move)
-                    else:
-                        _move_done(env, move)
-                    count += 1
-                logger.info("enviado commit a base de datos!")
-                cr.commit()
+                cr_new = registry(cr.dbname).cursor()
+                env = env(cr=cr_new)
+                try:
+                    for move in moves:
+                        logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
+                        if state == 'assign':
+                            _move_assign(env, move)
+                        else:
+                            _move_done(env, move)
+                        count += 1
+                    env.cr.commit()
+                    logger.info("enviado commit a base de datos!")
+                except Exception:
+                    env.cr.rollback()
+                    env.cr.close()
+                finally:
+                    env.cr.close()
 
 def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
