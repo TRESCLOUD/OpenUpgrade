@@ -937,14 +937,14 @@ def migrate_stock_qty(cr, registry):
         for state in ('done', 'assign'):
             offset = 0
             while True:
+                #Nuevo cursor para esta seccion
+                cr_new = pooler.get_db(cr.dbname).cursor()
+                env = env(cr=cr_new)
                 # Filtrado y analisis por el estado de la salida de inventario
                 moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=30000)
                 offset += 30000
                 if not moves:
                     break
-                cr_new = pooler.get_db(cr.dbname).cursor()
-                #cr_new = registry(cr.dbname).cursor()
-                env = env(cr=cr_new)
                 try:
                     for move in moves:
                         logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
