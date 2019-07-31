@@ -26,6 +26,7 @@ from openerp.openupgrade import openupgrade, openupgrade_80
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID as uid
 from openerp.tools.float_utils import float_compare
+import openerp.pooler as pooler
 
 logger = logging.getLogger('OpenUpgrade.stock')
 default_spec = {
@@ -941,7 +942,8 @@ def migrate_stock_qty(cr, registry):
                 offset += 30000
                 if not moves:
                     break
-                cr_new = registry(cr.dbname).cursor()
+                cr_new = pooler.get_db(cr.dbname).cursor()
+                #cr_new = registry(cr.dbname).cursor()
                 env = env(cr=cr_new)
                 try:
                     for move in moves:
@@ -955,7 +957,7 @@ def migrate_stock_qty(cr, registry):
                     logger.info("enviado commit a base de datos!")
                 except Exception:
                     env.cr.rollback()
-                    env.cr.close()
+                    #env.cr.close()
                 finally:
                     env.cr.close()
 
