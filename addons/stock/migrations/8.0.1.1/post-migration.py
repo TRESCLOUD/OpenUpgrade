@@ -937,29 +937,29 @@ def migrate_stock_qty(cr, registry):
         for state in ('done', 'assign'):
             offset = 0
             while True:
-                #Nuevo cursor para esta seccion
-                cr_new = pooler.get_db(cr.dbname).cursor()
-                env = env(cr=cr_new)
+                ##Nuevo cursor para esta seccion
+                #cr_new = pooler.get_db(cr.dbname).cursor()
+                #env = env(cr=cr_new)
                 # Filtrado y analisis por el estado de la salida de inventario
                 moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=30000)
                 offset += 30000
                 if not moves:
                     break
-                try:
-                    for move in moves:
-                        logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
-                        if state == 'assign':
-                            _move_assign(env, move)
-                        else:
-                            _move_done(env, move)
-                        count += 1
-                    env.cr.commit()
-                    logger.info("enviado commit a base de datos!")
-                except Exception:
-                    env.cr.rollback()
+                #try:
+                for move in moves:
+                    logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
+                    if state == 'assign':
+                        _move_assign(env, move)
+                    else:
+                        _move_done(env, move)
+                    count += 1
+                env.cr.commit()
+                logger.info("enviado commit a base de datos!")
+                #except Exception:
+                #    env.cr.rollback()
                     #env.cr.close()
-                finally:
-                    env.cr.close()
+                #finally:
+                #    env.cr.close()
 
 def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
