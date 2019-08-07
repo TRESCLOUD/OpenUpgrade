@@ -757,10 +757,11 @@ def migrate_procurement_order(cr, registry):
             cr, uid, procurement_ids, {'warehouse_id': warehouse.id})
 
 
-def _move_assign(env, move):
+def _move_assign(env, move_id):
 
     quant_obj = env["stock.quant"]
     move_obj = env["stock.move"]
+    move = move_obj.browse(move_id)
     to_assign_moves = set()
     main_domain = {}
     operations = set()
@@ -837,9 +838,11 @@ def _move_assign(env, move):
             quant_obj.quants_reserve(quants, move)
 
 
-def _move_done(env, move):
+def _move_done(env, move_id):
 
     quant_obj = env["stock.quant"]
+    move_obj = env["stock.move"]
+    move = move_obj.browse(move_id)
     move_qty = {}
     pickings = set()
     # Search operations that are linked to the moves
@@ -929,38 +932,33 @@ def migrate_stock_qty(cr, registry):
     openupgrade.logged_query(cr, sql)
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
-        cr.execute("""
-            SELECT count(*) 
-            from stock_move;""")
-        move_total = cr.fetchall()[0][0]
-        count = 1
-        for state in ('done', 'assign'):
+        for state in ('assign', 'done'):
+            count = 1
             offset = 0
-            while True:
-                ##Nuevo cursor para esta seccion
-                #cr_new = pooler.get_db(cr.dbname).cursor()
-                #env = env(cr=cr_new)
+            limit = 1000
+            cr.execute("""
+                    SELECT id FROM stock_move where state = %s order by date limit %s offset %s;""", 
+                    (state, limit, offset,))
+            moves = cr.fetchall()
+            while moves:
+                move_total = len(moves)
                 # Filtrado y analisis por el estado de la salida de inventario
-                moves = env['stock.move'].search([('state', '=', state)], order="date", offset=offset, limit=30000)
-                offset += 30000
-                if not moves:
-                    break
-                #try:
-                for move in moves:
-                    logger.info("ID state %s: %s, %s de %s "%(state, move.id , count, move_total))
-                    if state == 'assign':
-                        _move_assign(env, move)
-                    else:
-                        _move_done(env, move)
-                    count += 1
-                env.cr.commit()
-                logger.info("enviado commit a base de datos!")
-                #except Exception:
-                #    env.cr.rollback()
-                    #env.cr.close()
-                #finally:
-                #    env.cr.close()
-
+                offset += limit
+                if moves:
+                    for move in moves:
+                        logger.info("ID state %s: %s, %s de %s "%(state, move, count, move_total))
+                        if state == 'assign':
+                            _move_assign(env, move)
+                        else:
+                            _move_done(env, move)
+                        count += 1
+                    env.cr.commit()
+                    logger.info("enviado commit a base de datos!")
+                cr.execute("""
+                    SELECT id FROM stock_move where state = %s order by date limit %s offset %s;""", 
+                    (state, limit, offset,))
+                moves = cr.fetchall()
+                
 def migrate_stock_production_lot(cr, registry):
     """Serial numbers migration
     :param cr:
