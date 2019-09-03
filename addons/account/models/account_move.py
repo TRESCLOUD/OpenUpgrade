@@ -197,19 +197,21 @@ class AccountMove(models.Model):
 
     @api.multi
     def assert_balanced(self):
-        if not self.ids:
-            return True
-        prec = self.env['decimal.precision'].precision_get('Account')
-
-        self._cr.execute("""\
-            SELECT      move_id
-            FROM        account_move_line
-            WHERE       move_id in %s
-            GROUP BY    move_id
-            HAVING      abs(sum(debit) - sum(credit)) > %s
-            """, (tuple(self.ids), 10 ** (-max(5, prec))))
-        if len(self._cr.fetchall()) != 0:
-            raise UserError(_("Cannot create unbalanced journal entry."))
+#===============================================================================
+#         if not self.ids:
+#             return True
+#         prec = self.env['decimal.precision'].precision_get('Account')
+# 
+#         self._cr.execute("""\
+#             SELECT      move_id
+#             FROM        account_move_line
+#             WHERE       move_id in %s
+#             GROUP BY    move_id
+#             HAVING      abs(sum(debit) - sum(credit)) > %s
+#             """, (tuple(self.ids), 10 ** (-max(5, prec))))
+#         if len(self._cr.fetchall()) != 0:
+#             raise UserError(_("Cannot create unbalanced journal entry."))
+#===============================================================================
         return True
 
     # Do not forward port in >= saas-14
