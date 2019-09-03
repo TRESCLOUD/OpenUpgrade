@@ -1248,8 +1248,8 @@ def migrate(env, version):
     reset_blacklist_field_recomputation()
     fill_move_line_invoice(cr)
     merge_invoice_journals(env)
-    update_account_invoice_date(cr)
-    update_move_date(cr)
+    #update_account_invoice_date(cr)
+    #update_move_date(cr)
     fill_bank_accounts(cr)
     openupgrade.load_data(
         cr, 'account', 'migrations/9.0.1.1/noupdate_changes.xml',
