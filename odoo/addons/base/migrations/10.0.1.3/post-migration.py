@@ -69,13 +69,13 @@ def merge_country_states(env):
             openupgrade_merge_records.merge_records(
                 env, 'res.country.state',
                 (country_states - correct_country_states[-1]).ids,
-                correct_country_states[-1].id,
+                correct_country_states[-1].id, delete=False,
             )
         else:
             openupgrade_merge_records.merge_records(
                 env, 'res.country.state',
                 (country_states - country_states[-1]).ids,
-                country_states[-1].id,
+                country_states[-1].id, delete=False,
             )
     # Use here same method as pre-migration method, partially, just in case:
     with open(get_module_resource('base', 'res', 'res.country.state.csv'),
