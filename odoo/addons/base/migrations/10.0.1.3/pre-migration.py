@@ -202,7 +202,7 @@ def migrate(cr, version):
             ('account_report_company','l10n_ec'),
             ('analytic_contract_hr_expense','l10n_ec'),
             ('analytic_user_function','l10n_ec'),
-            ('asset','l10n_ec'),
+            ('asset','ecua_fixed_assets'),
             ('authorization_for_pricelist','l10n_ec'),
             ('base_partner_merge','l10n_ec'),
             ('base_status','l10n_ec'),
