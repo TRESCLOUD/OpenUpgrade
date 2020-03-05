@@ -285,7 +285,9 @@ def migrate(cr, version):
             ('trescloud_partner_related_phone_meet_opportunity','l10n_ec'),
             ('trescloud_remove_traduction_product','l10n_ec'),
             ('trescloud_tax_free_improvement','l10n_ec'),
-            ('trescloud_mp_sales','l10n_ec')
+            ('trescloud_mp_sales','l10n_ec'),
+            ('multipruss_reports','l10n_ec'),
+            ('trescloud_bank_account_type','l10n_ec'),
         ], merge_modules=True,
     )
     openupgrade.update_module_names(
