@@ -412,19 +412,18 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         'prefix': warehouse.code + '/PICK/', 'padding': 5
     })
 
+    #El siguiente meto fue modificado por TRESCLOUD
     def get_location_by_usage(usage):
         """
         Try to find a company specific location first. The fallback query
         will always at least contain the customer or supplier location from
         the module's data file which is noupdate nowadays.
         """
-        location_ids = (
-            location_obj.search(
-                cr, uid, [('usage', '=', usage),
-                          ('company_id', '=', warehouse.company_id.id)]) or
-            location_obj.search(
-                cr, uid, [('usage', '=', usage),
-                          ('company_id', '=', False)]))
+        cr.execute('''select id from stock_location where usage=%s and company_id=%s''', (usage, warehouse.company_id.id))
+        location_ids = cr.fetchone()
+        if not location_ids:
+            cr.execute('''select id from stock_location where usage=%s and company_id is null''', (usage,))
+            location_ids = cr.fetchone()
         return location_ids[0]
 
     customer_loc_id = get_location_by_usage('customer')
