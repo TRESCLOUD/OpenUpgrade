@@ -412,7 +412,7 @@ def _migrate_stock_warehouse(cr, registry, res_id):
         'prefix': warehouse.code + '/PICK/', 'padding': 5
     })
 
-    #El siguiente meto fue modificado por TRESCLOUD
+    #El siguiente metodo fue modificado por TRESCLOUD
     def get_location_by_usage(usage):
         """
         Try to find a company specific location first. The fallback query
