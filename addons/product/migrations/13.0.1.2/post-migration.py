@@ -46,6 +46,16 @@ def fill_product_variant_combination_table(env):
 
 
 def convert_image_attachments(env):
+    openupgrade.logged_query(
+        env.cr, """
+        --borramos las fotos "huerfanas" de productos eliminados en v7
+        delete
+        from ir_attachment
+        where res_model = 'product.product'
+        and res_field = 'image_variant'
+        and res_id not in (select id from product_product)
+        """,
+    )
     mapping = {
         'product.product': "image_variant",
         'product.template': "image",
