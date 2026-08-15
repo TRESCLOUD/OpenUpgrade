@@ -4,14 +4,16 @@
 # 
 # Translators:
 # fanha99 <fanha99@hotmail.com>, 2016
-# Martin Trigaux <mat@odoo.com>, 2016
+# Martin Trigaux, 2016
+# Duy BQ <duybq86@gmail.com>, 2020
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-07 08:56+0000\n"
-"PO-Revision-Date: 2016-09-07 08:56+0000\n"
-"Last-Translator: Martin Trigaux <mat@odoo.com>, 2016\n"
+"PO-Revision-Date: 2016-09-07 09:29+0000\n"
+"Last-Translator: Duy BQ <duybq86@gmail.com>, 2020\n"
 "Language-Team: Vietnamese (https://www.transifex.com/odoo/teams/41243/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,12 +42,12 @@ msgstr ""
 #. module: stock_calendar
 #: model:ir.model.fields,field_description:stock_calendar.field_stock_warehouse_orderpoint_last_execution_date
 msgid "Last Execution Date"
-msgstr ""
+msgstr "Ngày thực hiện gần nhất"
 
 #. module: stock_calendar
 #: model:ir.model,name:stock_calendar.model_resource_calendar_leaves
 msgid "Leave Detail"
-msgstr ""
+msgstr "Chi tiết Nghỉ"
 
 #. module: stock_calendar
 #: model:ir.model,name:stock_calendar.model_stock_warehouse_orderpoint
@@ -81,7 +83,7 @@ msgstr ""
 #. module: stock_calendar
 #: model:ir.model,name:stock_calendar.model_resource_calendar
 msgid "Resource Calendar"
-msgstr ""
+msgstr "Lịch Nguồn lực"
 
 #. module: stock_calendar
 #: model:ir.model.fields,help:stock_calendar.field_procurement_order_next_delivery_date
@@ -98,4 +100,4 @@ msgstr ""
 #. module: stock_calendar
 #: model:ir.model,name:stock_calendar.model_resource_calendar_attendance
 msgid "Work Detail"
-msgstr ""
+msgstr "Chi tiết Công việc"

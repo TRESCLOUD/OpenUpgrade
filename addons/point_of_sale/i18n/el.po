@@ -3,18 +3,21 @@
 # * point_of_sale
 # 
 # Translators:
-# Martin Trigaux <mat@odoo.com>, 2016
-# Kostas Goutoudis <goutoudis@gmail.com>, 2016
 # Timos Zacharatos <kokkinopioupiou@hotmail.com>, 2016
 # Eirini Spiridonidou <eirinisofia999@gmail.com>, 2016
+# Martin Trigaux, 2016
 # Stefanos Nikou <stefanos.nikou@gmail.com>, 2016
+# Giota Dandidou <giotadandidou@gmail.com>, 2017
+# George Tarasidis <george_tarasidis@yahoo.com>, 2017
+# Kostas Goutoudis <goutoudis@gmail.com>, 2018
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-23 13:27+0000\n"
-"PO-Revision-Date: 2017-06-23 13:27+0000\n"
-"Last-Translator: Stefanos Nikou <stefanos.nikou@gmail.com>, 2016\n"
+"PO-Revision-Date: 2016-09-07 09:25+0000\n"
+"Last-Translator: Kostas Goutoudis <goutoudis@gmail.com>, 2018\n"
 "Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,16 +84,18 @@ msgid ""
 "<span class=\"o_stat_text\">Put</span>\n"
 "                                <span class=\"o_stat_text\">Money In</span>"
 msgstr ""
+"<span class=\"o_stat_text\">Βάλτε</span>\n"
+"                                <span class=\"o_stat_text\">Χρήματα Μέσα</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
 msgid "<span class=\"o_stat_text\">Set Closing Balance</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Ορισμός Υπολοίπου Κλεισίματος</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
 msgid "<span class=\"o_stat_text\">Set Opening Balance</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Ορισμός Υπολοίπου Ανοίγματος</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -98,11 +103,13 @@ msgid ""
 "<span class=\"o_stat_text\">Take</span>\n"
 "                                <span class=\"o_stat_text\">Money Out</span>"
 msgstr ""
+"<span class=\"o_stat_text\">Λήψη</span>\n"
+"                                <span class=\"o_stat_text\">Χρημάτων Έξω</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "<span>Cash Balance</span>"
-msgstr ""
+msgstr "<span>Ταμειακό Υπόλοιπο</span>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
@@ -122,17 +129,17 @@ msgstr "<span>Προβολή</span>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Company</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Εταιρεία:</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Ending Balance</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Τελικό Υπόλοιπο</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Journal</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Ημερολόγιο</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
@@ -142,12 +149,12 @@ msgstr "<strong>Ημερομηνία Ανοίγματος</strong>:<br/>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Starting Balance</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Αρχικό Υπόλοιπο</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>Statement Name</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Όνομα Δήλωσης</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
@@ -157,7 +164,7 @@ msgstr "<strong>Σύνολο</strong>"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.report_statement
 msgid "<strong>User</strong>:<br/>"
-msgstr ""
+msgstr "<strong>Χρήστης</strong>:<br/>"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -170,6 +177,8 @@ msgstr "= Θεωρητικό Υπόλοιπο Κλεισίματος"
 #, python-format
 msgid "? Clicking \"Confirm\" will validate the payment."
 msgstr ""
+"? Κάνοντας κλικ στην επιλογή \"Επιβεβαίωση\" θα γίνει επικύρωση της "
+"πληρωμής."
 
 #. module: point_of_sale
 #. openerp-web
@@ -249,7 +258,7 @@ msgstr "ABC"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_account_bank_statement_cashbox
 msgid "Account Bank Statement Cashbox Details"
-msgstr ""
+msgstr "Λογαριασμός Τραπεζικής Δήλωσης Λεπτομερειών Ταμείου"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
@@ -386,7 +395,7 @@ msgstr "Είστε σίγουροι ότι ο πελάτης θέλει να π�
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_print_auto
 msgid "Automatic Receipt Printing"
-msgstr ""
+msgstr "Αυτόματη Εκτύπωση Απόδειξης"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_cashdrawer
@@ -403,7 +412,7 @@ msgstr "Διαθέσιμοι Τρόποι Πληρωμής"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.product_template_search_view_pos
 msgid "Available in POS"
-msgstr ""
+msgstr "Διαθέσιμο σε POS"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_product_product_available_in_pos
@@ -446,7 +455,7 @@ msgstr "Barcode"
 #. module: point_of_sale
 #: model:ir.ui.menu,name:point_of_sale.menu_pos_barcode_nomenclature_all
 msgid "Barcode Nomenclatures"
-msgstr ""
+msgstr "Ονοματολογίες Barcode"
 
 #. module: point_of_sale
 #. openerp-web
@@ -532,7 +541,7 @@ msgstr ""
 #: model:product.product,name:point_of_sale.carotte
 #: model:product.template,name:point_of_sale.carotte_product_template
 msgid "Carrots"
-msgstr ""
+msgstr "Καρότα"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_session.py:285
@@ -556,7 +565,7 @@ msgstr "Ταμειακή Μηχανή"
 #: code:addons/point_of_sale/models/pos_session.py:121
 #, python-format
 msgid "Cash control can only be applied to cash journals."
-msgstr ""
+msgstr "Ο έλεγχος μετρητών μπορεί να εφαρμοστεί μόνο σε ημερολόγια μετρητών."
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_account_cashbox_line
@@ -585,6 +594,8 @@ msgid ""
 "Categories are used to browse your products through the\n"
 "                touchscreen interface."
 msgstr ""
+"Οι κατηγορίες χρησιμοποιούνται για την περιήγηση στα προϊόντα σας μέσω της "
+"διεπαφής της οθόνης αφής."
 
 #. module: point_of_sale
 #. openerp-web
@@ -790,7 +801,7 @@ msgstr "Επιβεβαίωση"
 #: code:addons/point_of_sale/static/src/js/models.js:115
 #, python-format
 msgid "Connecting to the PosBox"
-msgstr ""
+msgstr "Σύνδεση με το PosBox"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -915,12 +926,12 @@ msgstr "Προεπιλεγμένο Υπόλοιπο"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_account_bank_statement_account_id
 msgid "Default Debit Account"
-msgstr "Προκαθορισμένος Λογαριασμός Πίστωσης"
+msgstr "Προεπιλεγμένος Λογαριασμός Χρέωσης"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_default_fiscal_position_id
 msgid "Default Fiscal Position"
-msgstr ""
+msgstr "Προεπιλεγμένη Φορολογική Θέση"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_barcode_nomenclature_id
@@ -1090,14 +1101,14 @@ msgstr "Εκπληρωμένη"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1314
 #, python-format
 msgid "Download Paid Orders"
-msgstr ""
+msgstr "Λήψη Πληρωμένων Παραγγελιών"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1316
 #, python-format
 msgid "Download Unpaid Orders"
-msgstr ""
+msgstr "Λήψη μη Πληρωμένων Παραγγελιών"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1152,7 +1163,7 @@ msgstr "Κενή Παραγγελία"
 #: code:addons/point_of_sale/static/src/js/screens.js:420
 #, python-format
 msgid "Empty Serial/Lot Number"
-msgstr ""
+msgstr "Κενό Serial Number/Αριθμός Παρτίδας"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_scan_via_proxy
@@ -1205,7 +1216,7 @@ msgstr "Λάθος! Δεν μπορείτα να δημιουργήσετε αν
 #: code:addons/point_of_sale/static/src/js/screens.js:1214
 #, python-format
 msgid "Error: Could not Save Changes"
-msgstr ""
+msgstr "Σφάλμα: Δεν ήταν δυνατή η αποθήκευση αλλαγών"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1268,7 +1279,7 @@ msgstr "Φορολογικές Θέσεις"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_form
 msgid "Footer"
-msgstr ""
+msgstr "Υποσέλιδο"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_big_scrollbars
@@ -1323,6 +1334,13 @@ msgstr "Ομαδοποίηση Εγγραφών Ημερολογίου"
 
 #. module: point_of_sale
 #. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:135
+#, python-format
+msgid "HTTPS connection to IoT Box failed"
+msgstr ""
+
+#. module: point_of_sale
+#. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1322
 #, python-format
 msgid "Hardware Events"
@@ -1348,7 +1366,7 @@ msgstr "Έχει Έλεγχο Μετρητών"
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_form
 msgid "Header"
-msgstr ""
+msgstr "Επικεφαλίδα"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_category_id
@@ -1387,6 +1405,9 @@ msgid ""
 "                touchscreen interface will automatically. We suggest not to put\n"
 "                a photo on categories for small (1024x768) screens."
 msgstr ""
+"Αν βάλετε μια φωτογραφία στην κατηγορία, η διάταξη της\n"
+"διεπαφής της οθόνης αφής θα γίνει αυτόματα. Προτείνουμε να μην τοποθετήσετε\n"
+"μια φωτογραφία σε κατηγορίες για μικρές οθόνες (1024x768)."
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_category_image
@@ -1398,7 +1419,7 @@ msgstr "Εικόνα"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1312
 #, python-format
 msgid "Import Orders"
-msgstr ""
+msgstr "Εισαγωγή Παραγγελιών"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_settings_module_pos_data_drinks
@@ -1462,7 +1483,7 @@ msgstr "Τιμολόγιο"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_invoice_journal_id
 msgid "Invoice Journal"
-msgstr ""
+msgstr "Ημερολόγιο Τιμολογίων"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order_invoiced
@@ -1624,29 +1645,38 @@ msgstr "Σύνδεση ως Διαχειριστής"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_pack_operation_lot_lot_name
 msgid "Lot Name"
-msgstr ""
+msgstr "Όνομα Παρτίδας"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/js/models.js:2016
 #, python-format
 msgid "Lot/Serial Number(s) Required"
-msgstr ""
+msgstr "Παρτίδα/Σειριακός Αριθμός Απαιτείται"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line_pack_lot_ids
 msgid "Lot/serial Number"
-msgstr ""
+msgstr "Παρτίδα/Σειριακός Αριθμός"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_settings_module_pos_loyalty
 msgid "Loyalty Program"
-msgstr ""
+msgstr "Πρόγραμμα αφοσίωσης"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_payment
 msgid "Make Payment"
 msgstr "Κάνε Πληρωμή"
+
+#. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/models.js:137
+#, python-format
+msgid ""
+"Make sure you are using IoT Box v18.12 or higher. Navigate to %s to accept "
+"the certificate of your IoT Box."
+msgstr ""
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_sale_config_settings_form_pos
@@ -1685,7 +1715,7 @@ msgstr "Μέθοδος"
 #: model:product.product,name:point_of_sale.product_product_consumable
 #: model:product.template,name:point_of_sale.product_product_consumable_product_template
 msgid "Miscellaneous"
-msgstr "Διάφορα Έξοδα"
+msgstr "Διάφορα"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_report_pos_order_search
@@ -1716,7 +1746,7 @@ msgstr "Οι Πωλήσεις μου"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:425
 #, python-format
 msgid "N/A"
-msgstr ""
+msgstr "Μ/Δ"
 
 #. module: point_of_sale
 #. openerp-web
@@ -1734,7 +1764,7 @@ msgstr "Περιγραφή"
 #: code:addons/point_of_sale/static/src/js/screens.js:1871
 #, python-format
 msgid "Negative Bank Payment"
-msgstr ""
+msgstr "Αρνητική Τραπεζική Πληρωμή"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_order_filter
@@ -2016,7 +2046,7 @@ msgstr "Ανάλυση Παραγγελιών"
 #: code:addons/point_of_sale/models/pos_config.py:212
 #, python-format
 msgid "POS Order %s"
-msgstr ""
+msgstr "Παραγγελία Εντατικής Λιανικής %s"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_order_line_form
@@ -2041,13 +2071,13 @@ msgstr "Γραμμές Παραγγελιών Εντατικής Λιανική�
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_partner_property_form
 msgid "POS Sales"
-msgstr ""
+msgstr "POS Πωλήσεις"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_config.py:223
 #, python-format
 msgid "POS order line %s"
-msgstr ""
+msgstr "Γραμμή Παραγγελίας Εντατικής Λιανικής %s"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_report_pos_order_search
@@ -2059,7 +2089,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_account_bank_statement_line_pos_statement_id
 msgid "POS statement"
-msgstr ""
+msgstr "Δήλωση Εντατικής Λιανικής"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_amount_paid
@@ -2082,7 +2112,7 @@ msgstr "Συναλλασόμενος"
 #. module: point_of_sale
 #: model:pos.category,name:point_of_sale.partner_services
 msgid "Partner Services"
-msgstr ""
+msgstr "Υπηρεσίες συνεργατών"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2154,7 +2184,7 @@ msgstr "Πληρωμές"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:898
 #, python-format
 msgid "Payments:"
-msgstr ""
+msgstr "Πληρωμές:"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.peche
@@ -2165,7 +2195,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.filters,name:point_of_sale.filter_orders_per_session
 msgid "Per session"
-msgstr ""
+msgstr "Ανά Βάρδια"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_order_user_id
@@ -2225,6 +2255,13 @@ msgid "Please define income account for this product: \"%s\" (id:%d)."
 msgstr "Παρακαλώ καθορίστε λογαριασμό Εσόδων για αυτό το είδος: \"%s\" (id:%d)."
 
 #. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2017
+#, python-format
+msgid "Please print the invoice from the backend"
+msgstr ""
+
+#. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:446
 #, python-format
 msgid "Please provide a partner for the sale."
@@ -2247,7 +2284,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:stock.picking.type,name:point_of_sale.picking_type_posout
 msgid "PoS Orders"
-msgstr ""
+msgstr "Παραγγελίες POS "
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_config_kanban
@@ -2383,12 +2420,12 @@ msgstr "Καταχωρημένο"
 #: model:product.product,name:point_of_sale.pomme_de_terre
 #: model:product.template,name:point_of_sale.pomme_de_terre_product_template
 msgid "Potatoes"
-msgstr ""
+msgstr "Πατάτες"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_precompute_cash
 msgid "Prefill Cash Payment"
-msgstr ""
+msgstr "Προπληρωμή με μετρητά"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2601,7 +2638,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
 msgid "Resume"
-msgstr ""
+msgstr "Επανάληψη"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:690
@@ -2613,7 +2650,7 @@ msgstr "Επιστροφές Ειδών"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_amount_return
 msgid "Returned"
-msgstr ""
+msgstr "Επιστράφηκαν"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_details
@@ -2659,33 +2696,33 @@ msgstr "Πωλητής"
 #: code:addons/point_of_sale/static/src/js/chrome.js:385
 #, python-format
 msgid "Scale"
-msgstr ""
+msgstr "Κλίμακα"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1301
 #, python-format
 msgid "Scan"
-msgstr ""
+msgstr "Σάρωση"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1302
 #, python-format
 msgid "Scan EAN-13"
-msgstr ""
+msgstr "Σάρωση EAN-13"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_iface_scan_via_proxy
 msgid "Scan via Proxy"
-msgstr ""
+msgstr "Σάρωση μέσω Proxy"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/js/chrome.js:368
 #, python-format
 msgid "Scanner"
-msgstr ""
+msgstr "Σαρωτής"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2729,14 +2766,14 @@ msgstr "Επιλογή Πελάτη"
 #: code:addons/point_of_sale/static/src/js/gui.js:237
 #, python-format
 msgid "Select User"
-msgstr ""
+msgstr "Επιλογή Χρήστη"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/js/screens.js:1997
 #, python-format
 msgid "Select tax"
-msgstr ""
+msgstr "Επιλογή φόρων"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:204
@@ -2752,14 +2789,14 @@ msgstr "Ακολουθία"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_sequence_number
 msgid "Sequence Number"
-msgstr ""
+msgstr "Αριθμός Ακολουθίας"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1055
 #, python-format
 msgid "Serial/Lot Number"
-msgstr ""
+msgstr "Σειριακός Αριθμός/Παρτίδα"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2773,7 +2810,7 @@ msgstr "Εξυπηρετείται από"
 #: code:addons/point_of_sale/static/src/js/screens.js:1945
 #, python-format
 msgid "Server Error"
-msgstr ""
+msgstr "Σφάλμα Διακομιστή"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_config.py:270
@@ -2795,7 +2832,7 @@ msgstr "Κωδικός Αριθμός Βάρδιας"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1181
 #, python-format
 msgid "Session ids:"
-msgstr ""
+msgstr "Αναγνωριστικά Βάρδιας:"
 
 #. module: point_of_sale
 #: model:ir.ui.view,arch_db:point_of_sale.view_pos_session_form
@@ -2817,7 +2854,7 @@ msgstr "Βάρδιες"
 #: code:addons/point_of_sale/static/src/js/screens.js:1141
 #, python-format
 msgid "Set Customer"
-msgstr ""
+msgstr "Επιλογή Πελάτη"
 
 #. module: point_of_sale
 #. openerp-web
@@ -2960,14 +2997,14 @@ msgstr "Μερικό σύνολο:"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1173
 #, python-format
 msgid "Successfully  imported"
-msgstr ""
+msgstr "Επιτυχής εισαγωγή"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1172
 #, python-format
 msgid "Successfully imported"
-msgstr ""
+msgstr "Επιτυχής εισαγωγή"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_session_cash_register_balance_end
@@ -2989,7 +3026,7 @@ msgstr "Σύνοψη βάσει Μεθόδων Πληρωμής"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:790
 #, python-format
 msgid "TOTAL"
-msgstr ""
+msgstr "ΣΥΝΟΛΟ"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_box_out
@@ -3033,14 +3070,14 @@ msgstr "Φόροι:"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:707
 #, python-format
 msgid "Tel:"
-msgstr ""
+msgstr "Τηλ:"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/xml/pos.xml:510
 #, python-format
 msgid "Tendered"
-msgstr ""
+msgstr "Παραδόθηκαν"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:254
@@ -3136,6 +3173,15 @@ msgid "The order could not be sent to the server due to an unknown error"
 msgstr ""
 
 #. module: point_of_sale
+#. openerp-web
+#: code:addons/point_of_sale/static/src/js/screens.js:2018
+#, python-format
+msgid ""
+"The order has been synchronized earlier. Please make the invoice from the "
+"backend for the order: "
+msgstr ""
+
+#. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config_iface_precompute_cash
 msgid ""
 "The payment input will behave similarily to bank payment input, and will be "
@@ -3221,7 +3267,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session_cash_register_balance_end
 msgid "Theoretical Closing Balance"
-msgstr ""
+msgstr "Θεωρητικό Υπόλοιπο Κλεισίματος"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3398,7 +3444,7 @@ msgstr "Υπόδειξη Προϊόντος"
 #: model:ir.model.fields,field_description:point_of_sale.field_product_product_to_weight
 #: model:ir.model.fields,field_description:point_of_sale.field_product_template_to_weight
 msgid "To Weigh With Scale"
-msgstr ""
+msgstr "Ζυγιζώμενο"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_order.py:768
@@ -3547,7 +3593,7 @@ msgstr "Χρήστες"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config_uuid
 msgid "Uuid"
-msgstr ""
+msgstr "Uuid"
 
 #. module: point_of_sale
 #. openerp-web
@@ -3668,6 +3714,8 @@ msgid ""
 "You cannot delete a product saleable in point of sale while a session is "
 "still opened."
 msgstr ""
+"Δεν μπορείτε να διαγράψετε ένα είδος που μπορεί να πωληθεί στο POS ενώ μια "
+"περίοδος λειτουργίας εξακολουθεί να είναι ανοιχτή."
 
 #. module: point_of_sale
 #. openerp-web
@@ -3823,7 +3871,7 @@ msgstr "camptocamp.com"
 #: code:addons/point_of_sale/static/src/xml/pos.xml:1525
 #, python-format
 msgid "caps lock"
-msgstr ""
+msgstr "κεφαλαία"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_cash_box_in
@@ -3863,14 +3911,14 @@ msgstr "έκπτωση"
 #: code:addons/point_of_sale/static/src/js/popups.js:109
 #, python-format
 msgid "error"
-msgstr ""
+msgstr "σφάλμα"
 
 #. module: point_of_sale
 #. openerp-web
 #: code:addons/point_of_sale/static/src/js/screens.js:1923
 #, python-format
 msgid "for an order of"
-msgstr ""
+msgstr "για μια παραγγελία του"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/models/pos_config.py:207
@@ -3914,7 +3962,7 @@ msgstr "report.point_of_sale.report_invoice"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_report_point_of_sale_report_saledetails
 msgid "report.point_of_sale.report_saledetails"
-msgstr ""
+msgstr "report.point_of_sale.report_saledetails"
 
 #. module: point_of_sale
 #. openerp-web

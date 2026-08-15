@@ -12,19 +12,18 @@ addons:
             - python-simplejson
             - python-serial
             - python-yaml
-            - python-sphinx
             - python-passlib
             - python-psycopg2
             - python-werkzeug
             - realpath
-    postgresql: "9.4"
+    postgresql: "9.6"
 
 env:
   - DB=openupgrade ODOO=./odoo-bin
 
 # Need flake8 for pep8 testing
 install:
-    - pip install flake8 coveralls
+    - pip install flake8==3.4.1 coveralls
 
 # Test with flake for:
 #   * migration scripts
@@ -48,24 +47,29 @@ script:
     - cat odoo/addons/base/migrations/*/tests/*.yml addons/*/migrations/*/tests/*.yml > ../test_data90.yml || true
     # Roundtrip to previous release to update the test database with additional test data
     # Loading and committing test data without triggering post tests needs https://github.com/odoo/odoo/pull/13146. This is now included in OpenUpgrade.
+    - old_commit="$(git rev-parse HEAD)"
     - git fetch --depth 2 origin 9.0
     - git reset --hard `git ls-remote |grep refs/heads/9.0 |awk '{print $1}'`
     - pip install -q -r requirements.txt
     # this crashes if there is no test data
     - if [ -s ../test_data90.yml ]; then ./openerp-server --database=$DB --test-file=`readlink -f ../test_data90.yml` --test-commit --stop-after-init; fi
-    # Line below may fail quite often due to Travis bug:
-    - git reset -q --hard $TRAVIS_COMMIT
+    - git reset -q --hard $old_commit
+    # Remove obsolete directories with .pyc files to prevent them from being imported (such as 'openerp')
+    - git clean -xfdq
     # Install Python requirements of target release
     - pip install -q -r requirements.txt
     # don't use pypi's openupgradelib, but the one from source to avoid choking
     # on unreleased features in openupgradelib
     - pip install --ignore-installed git+https://github.com/OCA/openupgradelib.git@master
     # select modules and perform the upgrade
-    - MODULES=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial\|Nothing" | sed -n '/^|/ s/^|\([0-9a-z_]*\) *|.*$/\1/g p' | paste -d, -s)
-    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES | sed -e "s/,/','/g")')"
-    - echo Testing modules $MODULES
-    - OPENUPGRADE_TESTS=1 coverage run $ODOO --database=$DB --update=$MODULES --stop-after-init
+    - MODULES_OLD=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial\|Nothing" | grep -v "l10n_be"  | grep -v "theme_" | sed -r -n 's/((^\| *\|del\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - MODULES_NEW=base,$(sed -n '/^+========/,$p'  odoo/openupgrade/doc/source/modules90-100.rst | grep "Done\|Partial\|Nothing" | grep -v "l10n_be"  | grep -v "theme_" | sed -r -n 's/((^\| *\|new\| *)|^\|)([0-9a-z_]*) *\|.*$/\3/g p' | sed '/^\s*$/d' | paste -d, -s)
+    - psql $DB -c "update ir_module_module set state='uninstalled' where name not in ('$(echo $MODULES_OLD | sed -e "s/,/','/g")')"
+    - echo Testing modules $MODULES_NEW
+    # Silence redundant logs from unlinking records (1 line is enough) to prevent Travis log overflow
+    - OPENUPGRADE_TESTS=1 $ODOO --database=$DB --update=$MODULES_NEW --stop-after-init --log-handler odoo.models.unlink:WARNING
     # try to build the documentation
+    - pip install sphinx
     - sh scripts/build_openupgrade_docs
 
 after_success:

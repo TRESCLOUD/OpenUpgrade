@@ -35,7 +35,7 @@ SAFE_EVAL_BASE = {
 def make_compute(text, deps):
     """ Return a compute function from its code body and dependencies. """
     func = lambda self: safe_eval(text, SAFE_EVAL_BASE, {'self': self}, mode="exec")
-    deps = [arg.strip() for arg in (deps or "").split(",")]
+    deps = [arg.strip() for arg in deps.split(",")] if deps else []
     return api.depends(*deps)(func)
 
 
@@ -149,6 +149,9 @@ class IrModel(models.Model):
 
         imc = self.env['ir.model.constraint'].search([('model', 'in', self.ids)])
         imc.unlink()
+        # OpenUpgrade: also prevent other IntegrityErrors when deleting models
+        self.env['ir.model.relation'].search([('model', 'in', self.ids)]).unlink()
+        # /OpenUpgrade
 
         self._drop_table()
         res = super(IrModel, self).unlink()
@@ -295,6 +298,11 @@ class IrModelFields(models.Model):
             raise UserError(_("The Selection Options expression is not a valid Pythonic expression."
                               "Please provide an expression in the [('key','Label'), ...] format."))
 
+    @api.constrains('domain')
+    def _check_domain(self):
+        for field in self:
+            safe_eval(field.domain or '[]')
+
     @api.constrains('name', 'state')
     def _check_name(self):
         for field in self:
@@ -401,6 +409,13 @@ class IrModelFields(models.Model):
     def _onchange_ttype(self):
         self.copy = (self.ttype != 'one2many')
         if self.ttype == 'many2many' and self.model_id and self.relation:
+            if self.relation not in self.env:
+                return {
+                    'warning': {
+                        'title': _('Model %s does not exist') % self.relation,
+                        'message': _('Please specify a valid model for the object relation'),
+                    }
+                }
             names = self._custom_many2many_names(self.model_id.model, self.relation)
             self.relation_table, self.column1, self.column2 = names
         else:
@@ -426,6 +441,13 @@ class IrModelFields(models.Model):
                     'title': _("Warning"),
                     'message': _("The table %r if used for other, possibly incompatible fields.") % self.relation_table,
                 }}
+
+    @tools.ormcache('model_name', 'name')
+    def _get_id(self, model_name, name):
+        self.env.cr.execute("SELECT id FROM ir_model_fields WHERE model=%s AND name=%s",
+                            (model_name, name))
+        result = self.env.cr.fetchone()
+        return result and result[0]
 
     @api.multi
     def _drop_column(self):
@@ -453,7 +475,8 @@ class IrModelFields(models.Model):
             if field.state == 'manual' and field.ttype == 'many2many':
                 rel_name = field.relation_table or model._fields[field.name].relation
                 tables_to_drop.add(rel_name)
-            model._pop_field(field.name)
+            if field.state == 'manual':
+                model._pop_field(field.name)
 
         if tables_to_drop:
             # drop the relation tables that are not used by other fields
@@ -610,7 +633,7 @@ class IrModelFields(models.Model):
                     item._prepare_update()
                     if column_rename:
                         raise UserError(_('Can only rename one field at a time!'))
-                    column_rename = (obj._table, item.name, vals['name'], item.index)
+                    column_rename = (obj._table, item.name, vals['name'], item.index, item.store)
 
                 # We don't check the 'state', because it might come from the context
                 # (thus be set for multiple fields) and will be ignored anyway.
@@ -628,10 +651,11 @@ class IrModelFields(models.Model):
 
         if column_rename:
             # rename column in database, and its corresponding index if present
-            table, oldname, newname, index = column_rename
-            self._cr.execute('ALTER TABLE "%s" RENAME COLUMN "%s" TO "%s"' % (table, oldname, newname))
-            if index:
-                self._cr.execute('ALTER INDEX "%s_%s_index" RENAME TO "%s_%s_index"' % (table, oldname, table, newname))
+            table, oldname, newname, index, stored = column_rename
+            if stored:
+                self._cr.execute('ALTER TABLE "%s" RENAME COLUMN "%s" TO "%s"' % (table, oldname, newname))
+                if index:
+                    self._cr.execute('ALTER INDEX "%s_%s_index" RENAME TO "%s_%s_index"' % (table, oldname, table, newname))
 
         if column_rename or patched_models:
             # setup models, this will reload all manual fields in registry
@@ -702,6 +726,8 @@ class IrModelFields(models.Model):
         # add compute function if given
         if field_data['compute']:
             attrs['compute'] = make_compute(field_data['compute'], field_data['depends'])
+        if field_data.get('sparse'):
+            attrs['sparse'] = field_data['sparse']
 
         return fields.Field.by_type[field_data['ttype']](**attrs)
 
@@ -822,6 +848,11 @@ class IrModelRelation(models.Model):
 
         # drop m2m relation tables
         for table in to_drop:
+            # OpenUpgrade: do not run the new table cleanup
+            openupgrade.message(
+                self._cr, 'Unknown', False, False,
+                "Not dropping the many2many table %s", table)
+            continue
             self._cr.execute('DROP TABLE %s CASCADE' % table,)
             _logger.info('Dropped table %s', table)
 
@@ -950,6 +981,7 @@ class IrModelAccess(models.Model):
             else:
                 msg_tail = _("Please contact your system administrator if you think this is an error.") + "\n\n(" + _("Document model") + ": %s)"
                 msg_params = (model_name,)
+            msg_tail += u' - ({} {}, {} {})'.format(_('Operation:'), mode, _('User:'), self._uid)
             _logger.info('Access Denied by ACLs for operation: %s, uid: %s, model: %s', mode, self._uid, model_name)
             msg = '%s %s' % (msg_heads[mode], msg_tail)
             raise AccessError(msg % msg_params)
@@ -1340,7 +1372,9 @@ class IrModelData(models.Model):
                 if model == 'ir.model.fields':
                     # Don't remove the LOG_ACCESS_COLUMNS unless _log_access
                     # has been turned off on the model.
-                    field = self.env[model].browse(res_id)
+                    field = self.env[model].browse(res_id).with_context(
+                        prefetch_fields=False,
+                    )
                     if not field.exists():
                         _logger.info('Deleting orphan external_ids %s', external_ids)
                         external_ids.unlink()
@@ -1394,13 +1428,27 @@ class IrModelData(models.Model):
         bad_imd_ids = []
         self = self.with_context({MODULE_UNINSTALL_FLAG: True})
 
+        # OpenUpgrade: also purge models and fields (with noupdate set to NULL, not FALSE)
+        # (which Odoo SA themselves delete explicitely in their migration scripts)
         query = """ SELECT id, name, model, res_id, module FROM ir_model_data
-                    WHERE module IN %s AND res_id IS NOT NULL AND noupdate=%s ORDER BY id DESC
+                    WHERE module IN %s AND res_id IS NOT NULL AND (noupdate=%s OR
+                    (noupdate IS NULL AND model IN ('ir.model', 'ir.model.fields')))
+                    ORDER BY id DESC
                 """
         self._cr.execute(query, (tuple(modules), False))
         for (id, name, model, res_id, module) in self._cr.fetchall():
             if (module, name) not in self.loads:
                 if model in self.env:
+                    # OpenUpgrade: backport reference count from Odoo 12.0
+                    if self.search([
+                            ("model", "=", model),
+                            ("res_id", "=", res_id),
+                            ("id", "!=", id),
+                            ("id", "not in", bad_imd_ids),
+                    ]):
+                        # another external id is still linked to the same record, only deleting the old imd
+                        bad_imd_ids.append(id)
+                        continue
                     # OpenUpgrade: never break on unlink of obsolete records
                     _logger.info('Deleting %s@%s (%s.%s)', res_id, model, module, name)
                     try:
@@ -1412,7 +1460,7 @@ class IrModelData(models.Model):
                         _logger.warning(
                             'Could not delete obsolete record with id: %d of model %s\n'
                             'Please refer to the log message right above',
-                            res_id, model)
+                            res_id, model, exc_info=True)
                         bad_imd_ids.append(id)
                     # /OpenUpgrade
         if bad_imd_ids:

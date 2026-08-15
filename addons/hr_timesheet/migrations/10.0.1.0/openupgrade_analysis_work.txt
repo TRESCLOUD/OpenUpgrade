@@ -6,6 +6,9 @@ hr_timesheet / project.project          / allow_timesheets (boolean)    : NEW
 hr_timesheet / account.analytic.line    / is_timesheet (boolean)        : DEL
 # Nothing to do
 
+hr_timesheet / account.analytic.line    / department_id (many2one)      : NEW relation: hr.project
+# Done: Fill it with any of the user's employees department
+
 hr_timesheet / account.analytic.line    / project_id (many2one)         : NEW relation: project.project
 # Done: Fill this field with the associated project if there's a task or an issue linked to the line
 
@@ -18,6 +21,11 @@ hr_timesheet / project.task             / parent_id (many2one)          : NEW re
 
 hr_timesheet / project.task             / timesheet_ids (one2many)      : NEW relation: account.analytic.line
 # Nothing to do: One2many field
+
+hr_timesheet / project.task             / children_hours (float)        : NEW computed field
+hr_timesheet / project.task             / total_hours_spent (float)     : NEW computed field
+# Done: Added in SQL in the pre-migration script
+
 
 ---XML records in module 'hr_timesheet'---
 NEW ir.actions.act_window: hr_timesheet.act_hr_timesheet_line
